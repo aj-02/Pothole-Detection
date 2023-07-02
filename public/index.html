@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>iSadak</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      .rounded-rect {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 50px -25px black;
+      }
+
+      .flex-center {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .flex-center.left {
+        left: 0px;
+      }
+
+      .flex-center.right {
+        right: 0px;
+      }
+
+      .sidebar-content {
+        position: absolute;
+        width: 95%;
+        height: 95%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 32px;
+        color: gray;
+      }
+
+      .sidebar-toggle {
+        position: absolute;
+        width: 1.3em;
+        height: 1.3em;
+        overflow: visible;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sidebar-toggle.left {
+        content: "Info";
+        right: -1.5em;
+      }
+
+      .sidebar-toggle:hover {
+        color: #0aa1cf;
+        cursor: pointer;
+      }
+
+      .sidebar {
+        transition: transform 1s;
+        z-index: 1;
+        width: 300px;
+        height: 94%;
+        margin-top: 3rem;
+      }
+      .button {
+        color: aliceblue;
+      }
+
+      .left.collapsed {
+        transform: translateX(-295px);
+      }
+      #images {
+        max-width: 15rem;
+      }
+    </style>
+
+    <div id="map">
+      <div
+        id="left"
+        class="sidebar flex-center left collapsed"
+        
+      >
+        <div
+          class="sidebar-content"
+          style="padding: 10px; color: black; font-size: small; background-color: whitesmoke; border-radius: 20px;"
+        >
+        <div style="text-align: center; font-weight: bold;">
+          Coordinates: 77.009465, 28.438043
+        </div>
+          <br>
+          <img
+            id="images"
+            style="margin: 10px; border-radius: 10px"
+            src="https://images1.livehindustan.com/uploadimage/library/2021/08/25/16_9/16_9_1/potholes_1629865792.jpg"
+            alt="none"
+          />
+          <br><br>
+          <img
+            id="images"
+            style="margin: 10px; border-radius: 10px"
+            src="https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/10/22/Pictures/ghaziabad-ghaziabad-adityanath-wednesday-government-allotting-hindustan_fc8bd7ac-b752-11e7-8276-b04a35b0fb2c.jpg"
+            alt="none"
+          />
+          <br><br>
+          <img
+            id="images"
+            style="margin: 10px; border-radius: 10px"
+            src="https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2018/09/26/Pictures/ghaziabad-ghaziabad-september-tuesday-hindustan-potholed-september_1cfe6b26-c11b-11e8-b1a0-a49c7cb48219.jpg"
+            alt="none"
+          />
+          <br>
+          <!-- onclick="toggleSidebar('left')" -->
+          <br />
+          <div style="font-size: medium; text-align: center;">
+            Has the road been fixed?
+          </div> 
+          <br>
+      
+          <div class="d-flex" style="font-size: small; justify-content: center;">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+    
+              />
+              <label class="form-check-label" style="padding-right: 5px;" for="flexRadioDefault1">
+                Yes
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                checked
+              />
+              <label class="form-check-label" for="flexRadioDefault2" style="padding-right: 5px;">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYXJuYXZqMDIiLCJhIjoiY2wxNWhibjBsMHluejNpczZxcDF1MXl6dyJ9.mCbfFZVCuzmUFzPTE8SQnw";
+      const center = [77.0266, 28.4595];
+      const map = new mapboxgl.Map({
+        container: "map",
+        zoom: 12,
+        center: center,
+        pitch: 60,
+        style: "mapbox://styles/mapbox/streets-v11",
+      });
+
+      const marker1 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.009465, 28.438043])
+        .addTo(map);
+
+      const marker2 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.00733, 28.446078])
+        .addTo(map);
+
+      const marker3 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([76.990626, 28.461834])
+        .addTo(map);
+
+      const marker4 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.040004, 28.419057])
+        .addTo(map);
+
+      const marker5 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.044953, 28.47335])
+        .addTo(map);
+      const marker6 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.022138, 28.427633])
+        .addTo(map);
+
+      const marker7 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.069541, 28.403164])
+        .addTo(map);
+      const marker8 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.081429, 28.414592])
+        .addTo(map);
+      const marker9 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.083199, 28.42266])
+        .addTo(map);
+      const marker10 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.094548, 28.42854])
+        .addTo(map);
+      const marker11 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.108181, 28.434642])
+        .addTo(map);
+      const marker12 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.104195, 28.419143])
+        .addTo(map);
+      const marker13 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.05694, 28.49635])
+        .addTo(map);
+      const marker14 = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([77.015284, 28.478905])
+        .addTo(map);
+
+      function toggleSidebar(id) {
+        const elem = document.getElementById(id);
+        // Add or remove the 'collapsed' CSS class from the sidebar element.
+        // Returns boolean "true" or "false" whether 'collapsed' is in the class list.
+        const collapsed = elem.classList.toggle("collapsed");
+        const padding = {};
+        // 'id' is 'right' or 'left'. When run at start, this object looks like: '{left: 300}';
+        padding[id] = collapsed ? 0 : 300; // 0 if collapsed, 300 px if not. This matches the width of the sidebars in the .sidebar CSS class.
+        // Use `map.easeTo()` with a padding option to adjust the map's center accounting for the position of sidebars.
+        map.easeTo({
+          padding: padding,
+          duration: 1000, // In ms. This matches the CSS transition duration property.
+        });
+      }
+
+      map.on("load", () => {
+        toggleSidebar("left");
+      });
+    </script>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark"
+      style="background-color: black"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">iSadak</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Report a Problem</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Register
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Login</a></li>
+                <li><a class="dropdown-item" href="#">Sign Up</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#">Contact Us</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </body>
+</html>
