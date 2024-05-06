@@ -1,4 +1,4 @@
-# Pothole Map
+# Pothole Detection
 
 This repository contains a web application for visualizing and pinpointing the locations of potholes on a map. The severity of the potholes is represented by different colors on the map, providing users with an intuitive understanding of the road conditions.
 
